@@ -1,0 +1,1696 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Student Registration</title>
+
+
+    <style>
+
+        /* =========================
+           GENERAL
+        ========================== */
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #f4f6f9;
+            color: #333;
+            padding: 30px;
+        }
+
+        .container {
+            max-width: 1300px;
+            margin: auto;
+        }
+
+
+        /* =========================
+           HEADER
+        ========================== */
+
+        .header {
+            background: #1e3a8a;
+            color: white;
+            padding: 25px;
+            border-radius: 10px 10px 0 0;
+
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header h1 {
+            margin-bottom: 5px;
+        }
+
+        .header p {
+            opacity: 0.9;
+        }
+
+
+        /* =========================
+           CARD
+        ========================== */
+
+        .card {
+            background: white;
+            padding: 30px;
+
+            border-radius: 0 0 10px 10px;
+
+            box-shadow:
+                0 3px 10px rgba(0,0,0,0.10);
+        }
+
+
+        /* =========================
+           FORM
+        ========================== */
+
+        .form-grid {
+            display: grid;
+
+            grid-template-columns:
+                repeat(2, 1fr);
+
+            gap: 18px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group label {
+            font-weight: bold;
+            margin-bottom: 7px;
+        }
+
+        input,
+        select {
+            width: 100%;
+
+            padding: 12px;
+
+            border: 1px solid #ccc;
+
+            border-radius: 6px;
+
+            font-size: 15px;
+
+            outline: none;
+        }
+
+        input:focus,
+        select:focus {
+            border-color: #2563eb;
+        }
+
+
+        /* =========================
+           BUTTONS
+        ========================== */
+
+        .buttons {
+            margin-top: 25px;
+
+            display: flex;
+
+            justify-content: space-between;
+
+            gap: 15px;
+        }
+
+        button {
+            border: none;
+
+            padding: 12px 20px;
+
+            border-radius: 6px;
+
+            color: white;
+
+            cursor: pointer;
+
+            font-size: 15px;
+
+            font-weight: bold;
+        }
+
+        button:hover {
+            opacity: 0.9;
+        }
+
+
+        .register-btn {
+            background: #2563eb;
+        }
+
+        .view-btn {
+            background: #059669;
+        }
+
+        .back-btn {
+            background: #059669;
+        }
+
+        .cancel-btn {
+            background: #6b7280;
+        }
+
+
+        /* =========================
+           STUDENTS PAGE
+        ========================== */
+
+        #studentsPage {
+            display: none;
+        }
+
+        .students-top {
+            background: white;
+
+            padding: 25px;
+
+            border-radius: 0 0 10px 10px;
+
+            box-shadow:
+                0 3px 10px rgba(0,0,0,0.10);
+        }
+
+        .students-title {
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            margin-bottom: 20px;
+        }
+
+        .students-title h2 {
+            color: #1e3a8a;
+        }
+
+
+        /* =========================
+           SEARCH
+        ========================== */
+
+        .search-box {
+            margin-bottom: 20px;
+        }
+
+        .search-box input {
+            max-width: 400px;
+        }
+
+
+        /* =========================
+           TABLE
+        ========================== */
+
+        .table-container {
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+
+            border-collapse: collapse;
+
+            min-width: 1100px;
+        }
+
+        th,
+        td {
+            padding: 12px;
+
+            border-bottom:
+                1px solid #ddd;
+
+            text-align: left;
+
+            white-space: nowrap;
+        }
+
+        th {
+            background: #1e3a8a;
+
+            color: white;
+        }
+
+        tr:hover {
+            background: #f8fafc;
+        }
+
+
+        /* =========================
+           STATUS
+        ========================== */
+
+        .status {
+            background: #dcfce7;
+
+            color: #166534;
+
+            padding: 5px 10px;
+
+            border-radius: 20px;
+
+            font-size: 13px;
+        }
+
+
+        /* =========================
+           ACTION BUTTONS
+        ========================== */
+
+        .action-btn {
+            border: none;
+
+            padding: 7px 11px;
+
+            border-radius: 5px;
+
+            color: white;
+
+            cursor: pointer;
+
+            margin-right: 5px;
+
+            font-size: 13px;
+        }
+
+        .view {
+            background: #2563eb;
+        }
+
+        .edit {
+            background: #f59e0b;
+        }
+
+        .delete {
+            background: #dc2626;
+        }
+
+
+        /* =========================
+           EMPTY TABLE
+        ========================== */
+
+        .empty {
+            text-align: center;
+
+            padding: 30px;
+
+            color: #777;
+        }
+
+
+        /* =========================
+           MODAL
+        ========================== */
+
+        .modal {
+            display: none;
+
+            position: fixed;
+
+            z-index: 1000;
+
+            left: 0;
+            top: 0;
+
+            width: 100%;
+            height: 100%;
+
+            background:
+                rgba(0,0,0,0.6);
+
+            justify-content: center;
+
+            align-items: center;
+
+            padding: 20px;
+        }
+
+        .modal-content {
+            background: white;
+
+            width: 100%;
+
+            max-width: 550px;
+
+            border-radius: 10px;
+
+            padding: 25px;
+
+            box-shadow:
+                0 5px 20px rgba(0,0,0,0.3);
+        }
+
+        .modal-header {
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            margin-bottom: 20px;
+        }
+
+        .modal-header h2 {
+            color: #1e3a8a;
+        }
+
+        .close {
+            background: #dc2626;
+
+            width: 35px;
+            height: 35px;
+
+            padding: 0;
+
+            border-radius: 50%;
+
+            font-size: 20px;
+        }
+
+        .student-details {
+            line-height: 2;
+        }
+
+        .student-details strong {
+            color: #1e3a8a;
+        }
+
+
+        /* =========================
+           RESPONSIVE
+        ========================== */
+
+        @media (max-width: 700px) {
+
+            body {
+                padding: 10px;
+            }
+
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .buttons {
+                flex-direction: column;
+            }
+
+            .header {
+                flex-direction: column;
+
+                text-align: center;
+
+                gap: 15px;
+            }
+
+            .students-title {
+                flex-direction: column;
+
+                align-items: stretch;
+
+                gap: 15px;
+            }
+
+            .search-box input {
+                max-width: 100%;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<div class="container">
+
+
+    <!-- ==================================================
+         REGISTRATION PAGE
+    =================================================== -->
+
+    <div id="registrationPage">
+
+
+        <!-- HEADER -->
+
+        <div class="header">
+
+            <div>
+
+                <h1 id="formTitle">
+                    Student Registration
+                </h1>
+
+                <p>
+                    Register a new student
+                </p>
+
+            </div>
+
+
+            <!-- VIEW STUDENTS BUTTON -->
+
+            <button
+                class="view-btn"
+                onclick="showStudentsPage()">
+
+                Views Students
+
+            </button>
+
+        </div>
+
+
+        <!-- FORM -->
+
+        <div class="card">
+
+            <form id="studentForm">
+
+
+                <!-- Hidden ID for UPDATE -->
+
+                <input
+                    type="hidden"
+                    id="studentId">
+
+
+                <div class="form-grid">
+
+
+                    <!-- FIRST NAME -->
+
+                    <div class="form-group">
+
+                        <label>
+                            First Name
+                        </label>
+
+                        <input
+                            type="text"
+                            id="firstName"
+                            placeholder="Enter first name"
+                            required>
+
+                    </div>
+
+
+                    <!-- LAST NAME -->
+
+                    <div class="form-group">
+
+                        <label>
+                            Last Name
+                        </label>
+
+                        <input
+                            type="text"
+                            id="lastName"
+                            placeholder="Enter last name"
+                            required>
+
+                    </div>
+
+
+                    <!-- GENDER -->
+
+                    <div class="form-group">
+
+                        <label>
+                            Gender
+                        </label>
+
+                        <select
+                            id="gender"
+                            required>
+
+                            <option value="">
+                                Select Gender
+                            </option>
+
+                            <option value="Male">
+                                Male
+                            </option>
+
+                            <option value="Female">
+                                Female
+                            </option>
+
+                        </select>
+
+                    </div>
+
+
+                    <!-- DOB -->
+
+                    <div class="form-group">
+
+                        <label>
+                            Date of Birth
+                        </label>
+
+                        <input
+                            type="date"
+                            id="dob"
+                            required>
+
+                    </div>
+
+
+                    <!-- COURSE -->
+
+                    <div class="form-group">
+
+                        <label>
+                            Course
+                        </label>
+
+                        <input
+                            type="text"
+                            id="course"
+                            placeholder="e.g. Computer Science"
+                            required>
+
+                    </div>
+
+
+                    <!-- PHONE -->
+
+                    <div class="form-group">
+
+                        <label>
+                            Phone
+                        </label>
+
+                        <input
+                            type="tel"
+                            id="phone"
+                            placeholder="07XXXXXXXX"
+                            required>
+
+                    </div>
+
+
+                    <!-- EMAIL -->
+
+                    <div class="form-group">
+
+                        <label>
+                            Email
+                        </label>
+
+                        <input
+                            type="email"
+                            id="email"
+                            placeholder="student@example.com"
+                            required>
+
+                    </div>
+
+
+                    <!-- ADDRESS -->
+
+                    <div class="form-group">
+
+                        <label>
+                            Address
+                        </label>
+
+                        <input
+                            type="text"
+                            id="address"
+                            placeholder="Enter address"
+                            required>
+
+                    </div>
+
+
+                </div>
+
+
+                <!-- FORM BUTTONS -->
+
+                <div class="buttons">
+
+
+                    <button
+                        type="submit"
+                        class="register-btn"
+                        id="submitBtn">
+
+                        Register Student
+
+                    </button>
+
+
+                    <button
+                        type="button"
+                        class="cancel-btn"
+                        id="cancelBtn"
+                        onclick="resetForm()"
+                        style="display:none;">
+
+                        Cancel Update
+
+                    </button>
+
+
+                </div>
+
+
+            </form>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- ==================================================
+         STUDENTS REGISTERED PAGE
+    =================================================== -->
+
+    <div id="studentsPage">
+
+
+        <!-- HEADER -->
+
+        <div class="header">
+
+            <div>
+
+                <h1>
+                    Students Registered
+                </h1>
+
+                <p>
+                    List of all registered students
+                </p>
+
+            </div>
+
+
+            <!-- BACK BUTTON -->
+
+            <button
+                class="back-btn"
+                onclick="showRegistrationPage()">
+
+                + Register Student
+
+            </button>
+
+        </div>
+
+
+        <!-- STUDENTS TABLE -->
+
+        <div class="students-top">
+
+
+            <div class="students-title">
+
+                <h2>
+                    Registered Students
+                </h2>
+
+
+                <div>
+
+                    <strong>
+                        Total Students:
+                    </strong>
+
+                    <span id="totalStudents">
+                        0
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <!-- SEARCH -->
+
+            <div class="search-box">
+
+                <input
+                    type="text"
+                    id="search"
+                    placeholder="Search student..."
+                    onkeyup="displayStudents()">
+
+            </div>
+
+
+            <!-- TABLE -->
+
+            <div class="table-container">
+
+                <table>
+
+                    <thead>
+
+                        <tr>
+
+                            <th>#</th>
+
+                            <th>
+                                First Name
+                            </th>
+
+                            <th>
+                                Last Name
+                            </th>
+
+                            <th>
+                                Gender
+                            </th>
+
+                            <th>
+                                Date of Birth
+                            </th>
+
+                            <th>
+                                Course
+                            </th>
+
+                            <th>
+                                Phone
+                            </th>
+
+                            <th>
+                                Email
+                            </th>
+
+                            <th>
+                                Address
+                            </th>
+
+                            <th>
+                                Status
+                            </th>
+
+                            <th>
+                                Actions
+                            </th>
+
+                        </tr>
+
+                    </thead>
+
+
+                    <tbody
+                        id="studentTable">
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+
+<!-- ==================================================
+     VIEW STUDENT MODAL
+=================================================== -->
+
+<div
+    id="studentModal"
+    class="modal">
+
+
+    <div class="modal-content">
+
+
+        <div class="modal-header">
+
+            <h2>
+                Student Details
+            </h2>
+
+
+            <button
+                class="close"
+                onclick="closeModal()">
+
+                ×
+
+            </button>
+
+        </div>
+
+
+        <div
+            id="studentDetails"
+            class="student-details">
+
+        </div>
+
+
+    </div>
+
+</div>
+
+
+
+<script>
+
+
+/* =====================================================
+   GET STUDENTS FROM LOCAL STORAGE
+===================================================== */
+
+let students =
+    JSON.parse(
+        localStorage.getItem("students")
+    ) || [];
+
+
+
+/* =====================================================
+   PAGE NAVIGATION
+===================================================== */
+
+function showStudentsPage() {
+
+    document
+        .getElementById("registrationPage")
+        .style.display = "none";
+
+
+    document
+        .getElementById("studentsPage")
+        .style.display = "block";
+
+
+    displayStudents();
+
+}
+
+
+
+function showRegistrationPage() {
+
+    document
+        .getElementById("studentsPage")
+        .style.display = "none";
+
+
+    document
+        .getElementById("registrationPage")
+        .style.display = "block";
+
+}
+
+
+
+/* =====================================================
+   FORM SUBMIT
+===================================================== */
+
+document
+    .getElementById("studentForm")
+    .addEventListener(
+        "submit",
+        function(event) {
+
+            event.preventDefault();
+
+
+            const studentId =
+                document
+                .getElementById("studentId")
+                .value;
+
+
+            /* ==========================================
+               STUDENT DATA
+            ========================================== */
+
+            const studentData = {
+
+                id:
+                    studentId
+                    ? Number(studentId)
+                    : Date.now(),
+
+                firstName:
+                    document
+                    .getElementById("firstName")
+                    .value
+                    .trim(),
+
+                lastName:
+                    document
+                    .getElementById("lastName")
+                    .value
+                    .trim(),
+
+                gender:
+                    document
+                    .getElementById("gender")
+                    .value,
+
+                dob:
+                    document
+                    .getElementById("dob")
+                    .value,
+
+                course:
+                    document
+                    .getElementById("course")
+                    .value
+                    .trim(),
+
+                phone:
+                    document
+                    .getElementById("phone")
+                    .value
+                    .trim(),
+
+                email:
+                    document
+                    .getElementById("email")
+                    .value
+                    .trim(),
+
+                address:
+                    document
+                    .getElementById("address")
+                    .value
+                    .trim(),
+
+                status:
+                    "Registered"
+
+            };
+
+
+
+            /* ==========================================
+               CREATE
+            ========================================== */
+
+            if (!studentId) {
+
+                students.push(studentData);
+
+                alert(
+                    "Student registered successfully!"
+                );
+
+            }
+
+
+            /* ==========================================
+               UPDATE
+            ========================================== */
+
+            else {
+
+                const index =
+                    students.findIndex(
+                        student =>
+                        student.id == studentId
+                    );
+
+
+                if (index !== -1) {
+
+                    students[index] =
+                        studentData;
+
+                }
+
+
+                alert(
+                    "Student updated successfully!"
+                );
+
+            }
+
+
+
+            /* ==========================================
+               SAVE DATA
+            ========================================== */
+
+            saveStudents();
+
+
+            /* ==========================================
+               RESET FORM
+            ========================================== */
+
+            resetForm();
+
+
+            /* ==========================================
+               SHOW STUDENTS PAGE
+            ========================================== */
+
+            showStudentsPage();
+
+        }
+    );
+
+
+
+/* =====================================================
+   SAVE STUDENTS
+===================================================== */
+
+function saveStudents() {
+
+    localStorage.setItem(
+        "students",
+        JSON.stringify(students)
+    );
+
+}
+
+
+
+/* =====================================================
+   DISPLAY STUDENTS
+===================================================== */
+
+function displayStudents() {
+
+    const table =
+        document
+        .getElementById("studentTable");
+
+
+    const search =
+        document
+        .getElementById("search")
+        .value
+        .toLowerCase()
+        .trim();
+
+
+    table.innerHTML = "";
+
+
+    /* ================================================
+       UPDATE TOTAL
+    ================================================= */
+
+    document
+        .getElementById("totalStudents")
+        .innerText = students.length;
+
+
+
+    /* ================================================
+       FILTER
+    ================================================= */
+
+    const filteredStudents =
+        students.filter(student => {
+
+            return (
+
+                student.firstName
+                    .toLowerCase()
+                    .includes(search)
+
+                ||
+
+                student.lastName
+                    .toLowerCase()
+                    .includes(search)
+
+                ||
+
+                student.gender
+                    .toLowerCase()
+                    .includes(search)
+
+                ||
+
+                student.course
+                    .toLowerCase()
+                    .includes(search)
+
+                ||
+
+                student.phone
+                    .toLowerCase()
+                    .includes(search)
+
+                ||
+
+                student.email
+                    .toLowerCase()
+                    .includes(search)
+
+                ||
+
+                student.address
+                    .toLowerCase()
+                    .includes(search)
+
+            );
+
+        });
+
+
+
+    /* ================================================
+       NO STUDENTS
+    ================================================= */
+
+    if (
+        filteredStudents.length === 0
+    ) {
+
+        table.innerHTML = `
+
+            <tr>
+
+                <td
+                    colspan="11"
+                    class="empty">
+
+                    No students registered.
+
+                </td>
+
+            </tr>
+
+        `;
+
+        return;
+
+    }
+
+
+
+    /* ================================================
+       DISPLAY STUDENTS
+    ================================================= */
+
+    filteredStudents.forEach(
+        (student, index) => {
+
+            table.innerHTML += `
+
+                <tr>
+
+                    <td>
+                        ${index + 1}
+                    </td>
+
+
+                    <td>
+                        ${escapeHTML(student.firstName)}
+                    </td>
+
+
+                    <td>
+                        ${escapeHTML(student.lastName)}
+                    </td>
+
+
+                    <td>
+                        ${escapeHTML(student.gender)}
+                    </td>
+
+
+                    <td>
+                        ${escapeHTML(student.dob)}
+                    </td>
+
+
+                    <td>
+                        ${escapeHTML(student.course)}
+                    </td>
+
+
+                    <td>
+                        ${escapeHTML(student.phone)}
+                    </td>
+
+
+                    <td>
+                        ${escapeHTML(student.email)}
+                    </td>
+
+
+                    <td>
+                        ${escapeHTML(student.address)}
+                    </td>
+
+
+                    <td>
+
+                        <span class="status">
+
+                            ${escapeHTML(student.status)}
+
+                        </span>
+
+                    </td>
+
+
+                    <td>
+
+                        <button
+                            class="action-btn view"
+                            onclick="viewStudent(${student.id})">
+
+                            View
+
+                        </button>
+
+
+                        <button
+                            class="action-btn edit"
+                            onclick="editStudent(${student.id})">
+
+                            Edit
+
+                        </button>
+
+
+                        <button
+                            class="action-btn delete"
+                            onclick="deleteStudent(${student.id})">
+
+                            Delete
+
+                        </button>
+
+                    </td>
+
+                </tr>
+
+            `;
+
+        }
+    );
+
+}
+
+
+
+/* =====================================================
+   VIEW STUDENT
+===================================================== */
+
+function viewStudent(id) {
+
+    const student =
+        students.find(
+            student => student.id == id
+        );
+
+
+    if (!student) return;
+
+
+    const details =
+        document.getElementById(
+            "studentDetails"
+        );
+
+
+    details.innerHTML = `
+
+        <p>
+            <strong>First Name:</strong>
+            ${escapeHTML(student.firstName)}
+        </p>
+
+        <p>
+            <strong>Last Name:</strong>
+            ${escapeHTML(student.lastName)}
+        </p>
+
+        <p>
+            <strong>Gender:</strong>
+            ${escapeHTML(student.gender)}
+        </p>
+
+        <p>
+            <strong>Date of Birth:</strong>
+            ${escapeHTML(student.dob)}
+        </p>
+
+        <p>
+            <strong>Course:</strong>
+            ${escapeHTML(student.course)}
+        </p>
+
+        <p>
+            <strong>Phone:</strong>
+            ${escapeHTML(student.phone)}
+        </p>
+
+        <p>
+            <strong>Email:</strong>
+            ${escapeHTML(student.email)}
+        </p>
+
+        <p>
+            <strong>Address:</strong>
+            ${escapeHTML(student.address)}
+        </p>
+
+        <p>
+            <strong>Status:</strong>
+
+            <span class="status">
+
+                ${escapeHTML(student.status)}
+
+            </span>
+
+        </p>
+
+    `;
+
+
+    document
+        .getElementById("studentModal")
+        .style.display = "flex";
+
+}
+
+
+
+/* =====================================================
+   CLOSE MODAL
+===================================================== */
+
+function closeModal() {
+
+    document
+        .getElementById("studentModal")
+        .style.display = "none";
+
+}
+
+
+
+/* =====================================================
+   EDIT STUDENT
+===================================================== */
+
+function editStudent(id) {
+
+    const student =
+        students.find(
+            student => student.id == id
+        );
+
+
+    if (!student) return;
+
+
+    /* ================================================
+       FILL FORM
+    ================================================= */
+
+    document
+        .getElementById("studentId")
+        .value = student.id;
+
+
+    document
+        .getElementById("firstName")
+        .value = student.firstName;
+
+
+    document
+        .getElementById("lastName")
+        .value = student.lastName;
+
+
+    document
+        .getElementById("gender")
+        .value = student.gender;
+
+
+    document
+        .getElementById("dob")
+        .value = student.dob;
+
+
+    document
+        .getElementById("course")
+        .value = student.course;
+
+
+    document
+        .getElementById("phone")
+        .value = student.phone;
+
+
+    document
+        .getElementById("email")
+        .value = student.email;
+
+
+    document
+        .getElementById("address")
+        .value = student.address;
+
+
+
+    /* ================================================
+       CHANGE FORM TITLE
+    ================================================= */
+
+    document
+        .getElementById("formTitle")
+        .innerText =
+        "Update Student";
+
+
+    document
+        .getElementById("submitBtn")
+        .innerText =
+        "Update Student";
+
+
+    document
+        .getElementById("cancelBtn")
+        .style.display =
+        "inline-block";
+
+
+
+    /* ================================================
+       GO TO FORM
+    ================================================= */
+
+    showRegistrationPage();
+
+
+    window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+    });
+
+}
+
+
+
+/* =====================================================
+   DELETE STUDENT
+===================================================== */
+
+function deleteStudent(id) {
+
+    const student =
+        students.find(
+            student => student.id == id
+        );
+
+
+    if (!student) return;
+
+
+    const confirmDelete =
+        confirm(
+
+            "Are you sure you want to delete " +
+
+            student.firstName +
+            " " +
+            student.lastName +
+            "?"
+
+        );
+
+
+    if (!confirmDelete) {
+        return;
+    }
+
+
+    students =
+        students.filter(
+            student => student.id != id
+        );
+
+
+    saveStudents();
+
+
+    displayStudents();
+
+
+    alert(
+        "Student deleted successfully!"
+    );
+
+}
+
+
+
+/* =====================================================
+   RESET FORM
+===================================================== */
+
+function resetForm() {
+
+    document
+        .getElementById("studentForm")
+        .reset();
+
+
+    document
+        .getElementById("studentId")
+        .value = "";
+
+
+    document
+        .getElementById("formTitle")
+        .innerText =
+        "Student Registration";
+
+
+    document
+        .getElementById("submitBtn")
+        .innerText =
+        "Register Student";
+
+
+    document
+        .getElementById("cancelBtn")
+        .style.display =
+        "none";
+
+}
+
+
+
+/* =====================================================
+   ESCAPE HTML
+   Security helper
+===================================================== */
+
+function escapeHTML(value) {
+
+    return String(value)
+
+        .replace(
+            /&/g,
+            "&amp;"
+        )
+
+        .replace(
+            /</g,
+            "&lt;"
+        )
+
+        .replace(
+            />/g,
+            "&gt;"
+        )
+
+        .replace(
+            /"/g,
+            "&quot;"
+        )
+
+        .replace(
+            /'/g,
+            "&#039;"
+        );
+
+}
+
+
+
+/* =====================================================
+   CLOSE MODAL WHEN CLICKING OUTSIDE
+===================================================== */
+
+window.addEventListener(
+    "click",
+    function(event) {
+
+        const modal =
+            document.getElementById(
+                "studentModal"
+            );
+
+
+        if (event.target === modal) {
+
+            closeModal();
+
+        }
+
+    }
+);
+
+
+
+/* =====================================================
+   INITIALIZE
+===================================================== */
+
+displayStudents();
+
+</script>
+
+</body>
+
+</html>
